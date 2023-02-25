@@ -7,9 +7,9 @@ public class User {
     @SerializedName("id")
     @Expose
     private String id;
-    @SerializedName("username")
+    @SerializedName("userName")
     @Expose
-    private String username;
+    private String userName;
     @SerializedName("nameDisplay")
     @Expose
     private String nameDisplay;
@@ -49,12 +49,12 @@ public class User {
      * @param id
      * @param avatar
      * @param createAt
-     * @param username
+     * @param userName
      */
-    public User(String id, String username, String nameDisplay, String mail, String password, String createAt, String updateAt, String avatar, Boolean online) {
+    public User(String id, String userName, String nameDisplay, String mail, String password, String createAt, String updateAt, String avatar, Boolean online) {
         super();
         this.id = id;
-        this.username = username;
+        this.userName = userName;
         this.nameDisplay = nameDisplay;
         this.mail = mail;
         this.password = password;
@@ -72,12 +72,12 @@ public class User {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getuserName() {
+        return userName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setuserName(String userName) {
+        this.userName = userName;
     }
 
     public String getNameDisplay() {
@@ -144,9 +144,9 @@ public class User {
         sb.append('=');
         sb.append(((this.id == null)?"<null>":this.id));
         sb.append(',');
-        sb.append("username");
+        sb.append("userName");
         sb.append('=');
-        sb.append(((this.username == null)?"<null>":this.username));
+        sb.append(((this.userName == null)?"<null>":this.userName));
         sb.append(',');
         sb.append("nameDisplay");
         sb.append('=');
