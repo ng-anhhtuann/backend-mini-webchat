@@ -41,10 +41,10 @@ public class UserRepository implements UserInterface{
         if (signUp == null) {
             return new Response(false,"Something's wrong");
         }
-        if (MailValidation.check(signUp.getMail())) {
+        if (!MailValidation.check(signUp.getMail())) {
             return new Response(false, "Invalid mail form");
         }
-        if (signUp.getUserName().equals("") || signUp.getNameDisplay().equals("")) {
+        if (signUp.getUserName().equals("") || signUp.getNameDisplay().equals("") || signUp.getPassword().equals("") || signUp.getMail().equals("")) {
             return new Response(false,"Fill all the cells");
         }
 
