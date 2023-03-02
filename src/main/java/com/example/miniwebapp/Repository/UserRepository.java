@@ -4,7 +4,7 @@ import com.example.miniwebapp.Models.Form.LogIn;
 import com.example.miniwebapp.Models.Form.SignUp;
 import com.example.miniwebapp.Models.Response;
 import com.example.miniwebapp.Models.User;
-import com.example.miniwebapp.Utilities.Database;
+import com.example.miniwebapp.Config.Database;
 import com.example.miniwebapp.Utilities.MailValidation;
 import com.google.gson.Gson;
 import com.mongodb.client.*;
@@ -15,8 +15,6 @@ import java.util.UUID;
 
 public class UserRepository implements UserInterface{
     public static final Database database = Database.getDatabase();
-
-    public static final MongoClient client = database.getMongoClient();
 
     public static final MongoDatabase mongoDb = database.getMongoDatabase();
 
@@ -63,7 +61,7 @@ public class UserRepository implements UserInterface{
             if (cursorIteratorMail.hasNext() || cursorIteratorUserName.hasNext()){
                 return new Response(false,"Username or Mail existed");
             } else {
-                String uuid = "" + UUID.fromString(signUp.toString());
+                String uuid = "" + UUID.randomUUID();
                 String time = "" + new Date().getTime();
                 User user = new User(uuid,
                         signUp.getUserName(),

@@ -6,10 +6,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController("authentication")
-@RequestMapping(value="/signup")
+@RequestMapping(value="/auth")
 @ResponseStatus(HttpStatus.CREATED)
 public class Authentication {
-    @PostMapping
+    @PostMapping(value="signup")
     public Object signUp(@RequestBody SignUp signUp){
         UserRepository userRepository = UserRepository.getUserRepository();
         return userRepository.signUpUser(signUp);
