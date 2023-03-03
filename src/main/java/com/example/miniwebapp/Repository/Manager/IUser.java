@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.repository.Query;
 
 import java.util.List;
 
-public interface UserInterface {
+public interface IUser {
     Object signUpUser(SignUp signUp);
     Object signInUser(LogIn logIn);
 }

@@ -5,20 +5,17 @@ import com.example.miniwebapp.Models.Form.SignUp;
 import com.example.miniwebapp.Models.Response;
 import com.example.miniwebapp.Models.User;
 import com.example.miniwebapp.Config.Database;
-import com.example.miniwebapp.Repository.Manager.UserInterface;
+import com.example.miniwebapp.Repository.Manager.IUser;
 import com.example.miniwebapp.Utilities.MailValidation;
 import com.example.miniwebapp.Utilities.StringValidation;
 import com.google.gson.Gson;
 import com.mongodb.client.*;
 import org.bson.Document;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 
-public class UserRepository implements UserInterface {
+public class UserRepository implements IUser {
     public static final Database database = Database.getDatabase();
 
     public static final MongoDatabase mongoDb = database.getMongoDatabase();
