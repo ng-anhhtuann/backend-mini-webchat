@@ -1,19 +1,24 @@
-package com.example.miniwebapp.Repository;
+package com.example.miniwebapp.Repository.Implementation;
 
 import com.example.miniwebapp.Models.Form.LogIn;
 import com.example.miniwebapp.Models.Form.SignUp;
 import com.example.miniwebapp.Models.Response;
 import com.example.miniwebapp.Models.User;
 import com.example.miniwebapp.Config.Database;
+import com.example.miniwebapp.Repository.Manager.UserInterface;
 import com.example.miniwebapp.Utilities.MailValidation;
+import com.example.miniwebapp.Utilities.StringValidation;
 import com.google.gson.Gson;
 import com.mongodb.client.*;
 import org.bson.Document;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
-public class UserRepository implements UserInterface{
+public class UserRepository implements UserInterface {
     public static final Database database = Database.getDatabase();
 
     public static final MongoDatabase mongoDb = database.getMongoDatabase();
@@ -44,21 +49,20 @@ public class UserRepository implements UserInterface{
         if (!MailValidation.check(signUp.getMail())) {
             return new Response(false, "Invalid mail form");
         }
-        if (signUp.getUserName().equals("") || signUp.getNameDisplay().equals("") || signUp.getPassword().equals("") || signUp.getMail().equals("")) {
+        if (StringValidation.check(signUp.getUserName())
+            || StringValidation.check(signUp.getNameDisplay())
+            || StringValidation.check(signUp.getPassword())
+            || StringValidation.check(signUp.getMail())) {
             return new Response(false,"Fill all the cells");
         }
 
-        Document searchMail = new Document();
-        searchMail.put("mail", signUp.getMail());
-        Document searchUserName = new Document();
-        searchUserName.put("userName", signUp.getUserName());
+        Document search = new Document("mail", signUp.getMail())
+            .append("userName", signUp.getUserName());
 
-        FindIterable<Document> cursorMail = userCollection.find(searchMail);
-        FindIterable<Document> cursorUserName = userCollection.find(searchUserName);
+        FindIterable<Document> cursor = userCollection.find(search);
 
-        try (final MongoCursor<Document> cursorIteratorMail = cursorMail.cursor();
-             final MongoCursor<Document> cursorIteratorUserName = cursorUserName.cursor()){
-            if (cursorIteratorMail.hasNext() || cursorIteratorUserName.hasNext()){
+        try (final MongoCursor<Document> cursorIterator = cursor.cursor()){
+            if (cursorIterator.hasNext()){
                 return new Response(false,"Username or Mail existed");
             } else {
                 String uuid = "" + UUID.randomUUID();
@@ -79,12 +83,48 @@ public class UserRepository implements UserInterface{
         catch (Exception e){
             return new Response(false, e.getMessage());
         }
-        return new Response(true, "Inserted new user");
+        return new Response(true, "SignUp successfully!");
     }
 
     @Override
     public Object signInUser(LogIn logIn) {
-        return null;
-    }
+        /*
+         * Invalidation check
+         * @params mail
+         * @params null object
+         * @params missing properties
+         * */
+        if (logIn == null) {
+            return new Response(false,"Something's wrong");
+        }
+        if (StringValidation.check(logIn.getUserName())
+            || StringValidation.check(logIn.getPassword())) {
+            return new Response(false,"Fill all the cells");
+        }
 
+        /**
+         * Search appearance of userName with password existed in db
+         */
+        Document searchUserName = new Document("userName",logIn.getUserName());
+        Document searchUserNameWithPassword = new Document("userName",logIn.getUserName())
+            .append("password",logIn.getPassword());
+
+        FindIterable<Document> cursorUserName = userCollection.find(searchUserName);
+        FindIterable<Document> cursorUserNameWithPassword = userCollection.find(searchUserNameWithPassword);
+
+        try(final MongoCursor<Document> cursorIteratorUserName = cursorUserName.cursor();
+            final MongoCursor<Document> cursorIteratorUserNameWithPassWord = cursorUserNameWithPassword.cursor()){
+            if (cursorIteratorUserName.hasNext()){
+                if (cursorIteratorUserNameWithPassWord.hasNext()){
+                    return new Response(true,"Login successfully!");
+                } else {
+                    return new Response(false, "Wrong password!");
+                }
+            } else {
+                return new Response(false, "User not found!");
+            }
+        } catch (Exception e){
+            return new Response(false, e.getMessage());
+        }
+    }
 }
