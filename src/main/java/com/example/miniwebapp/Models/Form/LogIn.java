@@ -30,15 +30,15 @@ public class LogIn {
         this.password = password;
     }
 
-    public String getuserName() {
+    public String getUserName() {
         return userName;
     }
 
-    public void setuserName(String userName) {
+    public void setUserName(String userName) {
         this.userName = userName;
     }
 
-    public LogIn withuserName(String userName) {
+    public LogIn withUserName(String userName) {
         this.userName = userName;
         return this;
     }
