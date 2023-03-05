@@ -3,7 +3,7 @@ package com.example.miniwebapp.Models.Form;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class LogUp {
+public class SignUp {
 
     @SerializedName("userName")
     @Expose
@@ -22,7 +22,7 @@ public class LogUp {
      * No args constructor for use in serialization
      *
      */
-    public LogUp() {
+    public SignUp() {
     }
 
     /**
@@ -32,7 +32,7 @@ public class LogUp {
      * @param nameDisplay
      * @param userName
      */
-    public LogUp(String userName, String nameDisplay, String password, String mail) {
+    public SignUp(String userName, String nameDisplay, String password, String mail) {
         super();
         this.userName = userName;
         this.nameDisplay = nameDisplay;
@@ -48,7 +48,7 @@ public class LogUp {
         this.userName = userName;
     }
 
-    public LogUp withUserName(String userName) {
+    public SignUp withUserName(String userName) {
         this.userName = userName;
         return this;
     }
@@ -61,7 +61,7 @@ public class LogUp {
         this.nameDisplay = nameDisplay;
     }
 
-    public LogUp withNameDisplay(String nameDisplay) {
+    public SignUp withNameDisplay(String nameDisplay) {
         this.nameDisplay = nameDisplay;
         return this;
     }
@@ -74,7 +74,7 @@ public class LogUp {
         this.password = password;
     }
 
-    public LogUp withPassword(String password) {
+    public SignUp withPassword(String password) {
         this.password = password;
         return this;
     }
@@ -87,7 +87,7 @@ public class LogUp {
         this.mail = mail;
     }
 
-    public LogUp withMail(String mail) {
+    public SignUp withMail(String mail) {
         this.mail = mail;
         return this;
     }
@@ -95,7 +95,7 @@ public class LogUp {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(LogUp.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
+        sb.append(SignUp.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
         sb.append("userName");
         sb.append('=');
         sb.append(((this.userName == null)?"<null>":this.userName));

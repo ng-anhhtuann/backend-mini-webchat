@@ -2,7 +2,9 @@ package com.example.miniwebapp.Models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import org.springframework.data.mongodb.core.mapping.Document;
 
+@Document(collection = "users")
 public class User {
     @SerializedName("id")
     @Expose
