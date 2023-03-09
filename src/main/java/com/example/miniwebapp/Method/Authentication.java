@@ -20,4 +20,9 @@ public class Authentication {
     public Object logIn(@RequestBody LogIn login){
         return userRepository.signInUser(login);
     }
+
+    @GetMapping(value="get-all")
+    public Object getAll(){
+        return userRepository.getAllUser();
+    }
 }

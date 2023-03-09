@@ -12,7 +12,9 @@ import com.google.gson.Gson;
 import com.mongodb.client.*;
 import org.bson.Document;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 public class UserRepository implements IUser {
@@ -123,5 +125,31 @@ public class UserRepository implements IUser {
         } catch (Exception e){
             return new Response(false, e.getMessage());
         }
+    }
+
+    @Override
+    public Object getAllUser() {
+        List<User> listUser = new ArrayList<>();
+        List<Document> listOfDoc = new ArrayList<>();
+        try (MongoCursor<Document> cursor = userCollection.find().iterator()) {
+            while (cursor.hasNext()) {
+                listOfDoc.add(cursor.next());
+            }
+        }
+        for (Document document : listOfDoc) {
+            User user = new User(
+                document.getString("id"),
+                document.getString("userName"),
+                document.getString("nameDisplay"),
+                document.getString("mail"),
+                document.getString("password"),
+                document.getString("createAt"),
+                document.getString("updateAt"),
+                document.getString("avatar"),
+                document.getBoolean("online")
+            );
+            listUser.add(user);
+        }
+        return listUser;
     }
 }
