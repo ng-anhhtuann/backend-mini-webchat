@@ -10,4 +10,5 @@ import java.util.List;
 public interface IUser {
     Object signUpUser(SignUp signUp);
     Object signInUser(LogIn logIn);
+    Object getAllUser();
 }
