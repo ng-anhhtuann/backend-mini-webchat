@@ -34,6 +34,11 @@ public class UserRepository implements IUser {
         return userRepository;
     }
 
+    /**
+     * @author ng-anhhtuann
+     * @param signUp
+     * @return status Object
+     */
     @Override
     public Object signUpUser(SignUp signUp) {
         /*
@@ -85,6 +90,11 @@ public class UserRepository implements IUser {
         return new Response(true, "SignUp successfully!");
     }
 
+    /**
+     * @author ng-anhhtuann
+     * @param logIn
+     * @return status Object
+     */
     @Override
     public Object signInUser(LogIn logIn) {
         /*
@@ -127,6 +137,10 @@ public class UserRepository implements IUser {
         }
     }
 
+    /**
+     * @author ng-anhhtuann
+     * @return list of all users
+     */
     @Override
     public Object getAllUser() {
         List<User> listUser = new ArrayList<>();
